@@ -1,66 +1,60 @@
+import sys
 from Core_Window import *
-from Data_Import import *
+from os import listdir
+from os.path import isfile, join
 
 class Data_Handler:
     def __init__(self):
         # self.fileName = fileName
-        self.itemTypeList = []
-        self.masterList = Data_Import.read_file('.\\File_Master_List.txt')
-        self.itemTypeList = Data_Import.parse_dataset(Data_Import.read_file(self.masterList[1]), ";")
+        puzzle_dir = '.\\puzzles\\'
+        puzzle_path = [f for f in listdir('.\\puzzles') if isfile(join(puzzle_dir, f))]
+        message = "Available Puzzles:\n"
+        for i in puzzle_path:
+            message = message + str(i) + '\n'
+        message = message + "Select a Puzzle to run: "
+        # puzzle_selection = int(input(message)) - 1
+        puzzle_selection = 0
+        if (puzzle_selection < 0) or (puzzle_selection >= len(puzzle_path)):
+            print("Error! Input Out of Bounds!")
+            sys.exit()
         
-        path_individual = Data_Import.read_file(self.masterList[2])
-        self.individualTreasure = {
-            "0-4":Data_Import.read_file(path_individual[0]),
-            "5-10":Data_Import.read_file(path_individual[1]),
-            "11-16":Data_Import.read_file(path_individual[2]),
-            "17-20":Data_Import.read_file(path_individual[3])
-            }
+        raw_data = self.read_file(puzzle_dir + puzzle_path[puzzle_selection])
+        if len(raw_data) != 9:
+            print("Error in File Data!")
+            sys.exit()
         
-        path_horde = Data_Import.read_file(self.masterList[3])
-        self.hordeTreasureCoins = {
-            "0-4":Data_Import.read_file(path_horde[0]),
-            "5-10":Data_Import.read_file(path_horde[1]),
-            "11-16":Data_Import.read_file(path_horde[2]),
-            "17-20":Data_Import.read_file(path_horde[3])
-        }
-        self.hordeTreasureItems = {
-            "0-4":Data_Import.read_file(path_horde[4]),
-            "5-10":Data_Import.read_file(path_horde[5]),
-            "11-16":Data_Import.read_file(path_horde[6]),
-            "17-20":Data_Import.read_file(path_horde[7])
-        }
-        self.tags = Data_Import.create_dictionary(self.masterList[4])
-        self.mit = Data_Import.create_dictionary(self.masterList[5])
-
-        # Import Time
-        armor = Data_Import.create_dictionary(self.masterList[6]) # Import Armors - Basic and Magic
-        self.potion = Data_Import.create_dictionary(self.masterList[7]) # Import Potions
-        ring = Data_Import.create_dictionary(self.masterList[8]) # Import Rings
-        rod = Data_Import.create_dictionary(self.masterList[9]) # Import Rods
-        shield = Data_Import.create_dictionary(self.masterList[10]) # Import Shields - Basic and Magic
-        self.spell = Data_Import.create_dictionary(self.masterList[11]) # Import Spells
-        staff = Data_Import.create_dictionary(self.masterList[12]) # Import Staffs
-        wand = Data_Import.create_dictionary(self.masterList[13]) # Import Wands
-        weapon = Data_Import.create_dictionary(self.masterList[14]) # Import Weapons - Basic and Magic
-        wondrous = Data_Import.create_dictionary(self.masterList[15]) # Import Wondrous
-
-        self.asw = armor | shield | weapon
-        self.rrsww = ring | rod | staff | wand | wondrous
-
-        self.enchantments = Data_Import.create_dictionary(self.masterList[16]) # Import Enchantments
-        self.elt = Data_Import.create_dictionary(self.masterList[17])
-        self.asw_loot_table = Data_Import.create_dictionary(self.masterList[18])
-
-        self.aglt = Data_Import.create_dictionary(self.masterList[19])
+        temp_data = self.parse_data(raw_data)
+        
+        rows, cols = (3,3)
+        self.puzzle_dic = {}
+        self.puzzle_dic['start'] = [[0 for i in range(cols)] for j in range(rows)]
+        self.puzzle_dic['locked'] = [[0 for i in range(cols)] for j in range(rows)]
+        self.puzzle_dic['answer'] = [[0 for i in range(cols)] for j in range(rows)]
+        
+        self.fill_dic_2d_list(temp_data, 'start', 0, 2)
+        self.fill_dic_2d_list(temp_data, 'locked', 3, 5)
+        self.fill_dic_2d_list(temp_data, 'answer', 6, 8)
 
         pause = ""
 
-
-
-
-
-
-
-
-
+    def fill_dic_2d_list(self, data, key, start, end):
+        for x in range(0, 3):
+            for y in range(0,3):
+                self.puzzle_dic[key][x][y]=data[x+start][y]
+    
+    def read_file(self, fileName):
+        content_array = []
+        with open(fileName) as f:
+                #Content_list is the list that contains the read lines.     
+                for line in f:
+                        content_array.append(line.replace('\n',''))
+        return content_array
+    
+    def parse_data(self, array):
+        deliminator = ';'
+        temp = []
+        for i in range(len(array)):
+            tempArray = array[i].split(deliminator)
+            temp.append(tempArray)
+        return temp
 
