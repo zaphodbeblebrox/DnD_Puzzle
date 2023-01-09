@@ -1,18 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, font
-from frame_sudoku import *
 
-class Core_Window:
-    def __init__(self, program_data):
-
-        # self.p_style = StyleHandler()
-        
-        self.root = tk.Tk() #Makes the window
-        self.root.title("Puzzle")
-        self.root.iconbitmap("dnd.ico")
-        # self.root.geometry('1500x700')
-
-        # --- Definitions
+class StyleHandler:
+    def __init__(self):
         self.color = {
             "notebookbg":"#1a1a1a",
             "notebookfg":"#000000",
@@ -30,9 +20,7 @@ class Core_Window:
             "disabled":"#FF9494",
             "scrollbar":"#4d4d4d",
         }
-
-        self.root.config(background = self.color['background'])
-              
+        
         # Create Notebook Style
         f = ('Segoe UI','10','bold')
         t = ('Segoe UI','10','normal')
@@ -127,13 +115,3 @@ class Core_Window:
             indicatorcolor=[('selected', self.color["selected"]),
                         ('pressed', self.color["selected"])]
           )
-
-        # Future do comparison of puzzle type and call appropriate Frame_XXX
-        self.puzzle_display = FrameSudoku(self.color, self.root, program_data)     
-
-
-
-
-
-    def start(self):
-        self.root.mainloop() #start monitoring and updating the GUI

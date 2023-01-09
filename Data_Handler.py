@@ -1,5 +1,5 @@
 import sys
-from Core_Window import *
+# from core_window import *
 from os import listdir
 from os.path import isfile, join
 
@@ -35,7 +35,7 @@ class Data_Handler:
         self.fill_dic_2d_list(temp_data, 'locked', 3, 5)
         self.fill_dic_2d_list(temp_data, 'answer', 6, 8)
 
-        pause = ""
+        # pause = ""
 
     def fill_dic_2d_list(self, data, key, start, end):
         for x in range(0, 3):
