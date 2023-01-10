@@ -9,7 +9,8 @@ class FrameSudoku:
         self.color = color
         self.program_data = program_data
 
-        self.submit = tk.PhotoImage(file = r".\\images\\submit.png")
+        self.submit = tk.PhotoImage(file = r".\\images\\submit_default.png")
+        self.submit_pressed = tk.PhotoImage(file = r".\\images\\submit_pressed.png")
 
         self.dial_on = [tk.PhotoImage(file = r".\\images\\dial_1_on.png",),
                         tk.PhotoImage(file = r".\\images\\dial_2_on.png"),
@@ -65,3 +66,12 @@ class FrameSudoku:
         self.button_2_1.grid(row=2, column=1, sticky="nsew", padx=5, pady=5)
         self.button_2_2.grid(row=2, column=2, sticky="nsew", padx=5, pady=5)
         self.button_submit.grid(row=0, column=3, rowspan=3, sticky="nsew", padx=5, pady=5)
+
+        self.button_submit.bind('<Button-1>', self.button_pressed)
+        self.button_submit.bind('<ButtonRelease-1>', self.button_released)
+
+    def button_pressed(self, event):
+        self.button_submit.config(image=self.submit_pressed)
+    
+    def button_released(self, event):
+        self.button_submit.config(image=self.submit)
