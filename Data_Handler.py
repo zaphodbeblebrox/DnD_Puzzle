@@ -19,23 +19,45 @@ class Data_Handler:
             sys.exit()
         
         raw_data = self.read_file(puzzle_dir + puzzle_path[puzzle_selection])
-        if len(raw_data) != 9:
+        if len(raw_data) != 12:
             print("Error in File Data!")
             sys.exit()
         
         temp_data = self.parse_data(raw_data)
         
-        rows, cols = (3,3)
+        # rows, cols = (3,3)
         self.puzzle_dic = {}
-        self.puzzle_dic['start'] = [[0 for i in range(cols)] for j in range(rows)]
-        self.puzzle_dic['locked'] = [[0 for i in range(cols)] for j in range(rows)]
-        self.puzzle_dic['answer'] = [[0 for i in range(cols)] for j in range(rows)]
         
-        self.fill_dic_2d_list(temp_data, 'start', 0, 2)
-        self.fill_dic_2d_list(temp_data, 'locked', 3, 5)
-        self.fill_dic_2d_list(temp_data, 'answer', 6, 8)
+        # if puzzle is sudoku type()
+        self.config_sudoku(temp_data)
+
+        # self.puzzle_dic['start'] = [[0 for i in range(cols)] for j in range(rows)]
+        # self.puzzle_dic['current'] = [[0 for i in range(cols)] for j in range(rows)]
+        # self.puzzle_dic['locked'] = [[0 for i in range(cols)] for j in range(rows)]
+        # self.puzzle_dic['answer'] = [[0 for i in range(cols)] for j in range(rows)]
+        
+        # self.fill_dic_2d_list(temp_data, 'start', 0, 2)
+        # self.fill_dic_2d_list(temp_data, 'current', 0, 2)
+        # self.fill_dic_2d_list(temp_data, 'locked', 3, 5)
+        # self.fill_dic_2d_list(temp_data, 'pairing', 6, 8)
+        # self.fill_dic_2d_list(temp_data, 'answer', 9, 11)
 
         # pause = ""
+
+    def config_sudoku(self, data):
+        rows, cols = (3,3)
+        self.puzzle_dic['start'] = [[0 for i in range(cols)] for j in range(rows)]
+        self.puzzle_dic['current'] = [[0 for i in range(cols)] for j in range(rows)]
+        self.puzzle_dic['locked'] = [[0 for i in range(cols)] for j in range(rows)]
+        self.puzzle_dic['pairing'] = [[0 for i in range(cols)] for j in range(rows)]
+        self.puzzle_dic['answer'] = [[0 for i in range(cols)] for j in range(rows)]
+        
+        self.fill_dic_2d_list(data, 'start', 0, 2)
+        self.fill_dic_2d_list(data, 'current', 0, 2)
+        self.fill_dic_2d_list(data, 'locked', 3, 5)
+        self.fill_dic_2d_list(data, 'pairing', 6, 8)
+        self.fill_dic_2d_list(data, 'answer', 9, 11)
+
 
     def fill_dic_2d_list(self, data, key, start, end):
         for x in range(0, 3):

@@ -36,25 +36,22 @@ class FrameSudoku:
             self.dial_on[i] = self.dial_on[i].subsample(2,2)
         for i in range(len(self.dial_off)):
             self.dial_off[i] = self.dial_off[i].subsample(2,2)
-        # self.submit = self.submit.subsample(2,2)
-        f = font.Font(weight = "bold", size= 10)
 
         # Generator Frame Definitions----------
-
         self.frameGen = tk.LabelFrame(self.root, bd=0, padx=5, pady=5, bg=self.color['background'])
         self.frameGen.grid(row=0, column=0)
 
         # button_row_col
-        self.button_0_0 = tk.Button(self.frameGen, padx=5, pady=5, bg=self.color['background'], image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][0])-1])
-        self.button_0_1 = tk.Button(self.frameGen, padx=5, pady=5, bg=self.color['background'], image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][1])-1])
-        self.button_0_2 = tk.Button(self.frameGen, padx=5, pady=5, bg=self.color['background'], image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][2])-1])
-        self.button_1_0 = tk.Button(self.frameGen, padx=5, pady=5, bg=self.color['background'], image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][0])-1])
-        self.button_1_1 = tk.Button(self.frameGen, padx=5, pady=5, bg=self.color['background'], image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][1])-1])
-        self.button_1_2 = tk.Button(self.frameGen, padx=5, pady=5, bg=self.color['background'], image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][2])-1])
-        self.button_2_0 = tk.Button(self.frameGen, padx=5, pady=5, bg=self.color['background'], image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][0])-1])
-        self.button_2_1 = tk.Button(self.frameGen, padx=5, pady=5, bg=self.color['background'], image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][1])-1])
-        self.button_2_2 = tk.Button(self.frameGen, padx=5, pady=5, bg=self.color['background'], image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][2])-1])
-        self.button_submit = tk.Button(self.frameGen, padx=5, pady=5, bg=self.color['background'], image = self.submit)
+        self.button_0_0 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][0])-1])
+        self.button_0_1 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][1])-1])
+        self.button_0_2 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][2])-1])
+        self.button_1_0 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][0])-1])
+        self.button_1_1 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][1])-1])
+        self.button_1_2 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][2])-1])
+        self.button_2_0 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][0])-1])
+        self.button_2_1 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][1])-1])
+        self.button_2_2 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][2])-1])
+        self.button_submit = ttk.Button(self.frameGen, image = self.submit)
 
         self.button_0_0.grid(row=0, column=0, sticky="nsew", padx=5, pady=5, ipadx=5, ipady=5)
         self.button_0_1.grid(row=0, column=1, sticky="nsew", padx=5, pady=5)
