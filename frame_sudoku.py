@@ -41,31 +41,43 @@ class FrameSudoku:
         self.frameGen = tk.LabelFrame(self.root, bd=0, padx=5, pady=5, bg=self.color['background'])
         self.frameGen.grid(row=0, column=0)
 
+        # Create 2d-List to hold buttons
+        rows, cols = (3,3)
+        self.button_dials = [[0 for i in range(cols)] for j in range(rows)]
+        for x in range(0, 3):
+            for y in range(0,3):
+                self.button_dials[x][y] = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][x][y])-1])
+                self.button_dials[x][y].grid(row=x, column=y, sticky="nsew", padx=5, pady=5)
+
+        
         # button_row_col
-        self.button_0_0 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][0])-1])
-        self.button_0_1 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][1])-1])
-        self.button_0_2 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][2])-1])
-        self.button_1_0 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][0])-1])
-        self.button_1_1 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][1])-1])
-        self.button_1_2 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][2])-1])
-        self.button_2_0 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][0])-1])
-        self.button_2_1 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][1])-1])
-        self.button_2_2 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][2])-1])
+        # self.button_0_0 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][0])-1])
+        # self.button_0_1 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][1])-1])
+        # self.button_0_2 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][0][2])-1])
+        # self.button_1_0 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][0])-1])
+        # self.button_1_1 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][1])-1])
+        # self.button_1_2 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][1][2])-1])
+        # self.button_2_0 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][0])-1])
+        # self.button_2_1 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][1])-1])
+        # self.button_2_2 = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][2][2])-1])
         self.button_submit = ttk.Button(self.frameGen, image = self.submit)
 
-        self.button_0_0.grid(row=0, column=0, sticky="nsew", padx=5, pady=5, ipadx=5, ipady=5)
-        self.button_0_1.grid(row=0, column=1, sticky="nsew", padx=5, pady=5)
-        self.button_0_2.grid(row=0, column=2, sticky="nsew", padx=5, pady=5)
-        self.button_1_0.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
-        self.button_1_1.grid(row=1, column=1, sticky="nsew", padx=5, pady=5)
-        self.button_1_2.grid(row=1, column=2, sticky="nsew", padx=5, pady=5)
-        self.button_2_0.grid(row=2, column=0, sticky="nsew", padx=5, pady=5)
-        self.button_2_1.grid(row=2, column=1, sticky="nsew", padx=5, pady=5)
-        self.button_2_2.grid(row=2, column=2, sticky="nsew", padx=5, pady=5)
+        # self.button_0_0.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
+        # self.button_0_1.grid(row=0, column=1, sticky="nsew", padx=5, pady=5)
+        # self.button_0_2.grid(row=0, column=2, sticky="nsew", padx=5, pady=5)
+        # self.button_1_0.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
+        # self.button_1_1.grid(row=1, column=1, sticky="nsew", padx=5, pady=5)
+        # self.button_1_2.grid(row=1, column=2, sticky="nsew", padx=5, pady=5)
+        # self.button_2_0.grid(row=2, column=0, sticky="nsew", padx=5, pady=5)
+        # self.button_2_1.grid(row=2, column=1, sticky="nsew", padx=5, pady=5)
+        # self.button_2_2.grid(row=2, column=2, sticky="nsew", padx=5, pady=5)
         self.button_submit.grid(row=0, column=3, rowspan=3, sticky="nsew", padx=5, pady=5)
 
         self.button_submit.bind('<Button-1>', self.button_pressed)
         self.button_submit.bind('<ButtonRelease-1>', self.button_released)
+        
+        # example get image path of assigned picture mapped to button
+        # button.cget('image')==str(flag)
 
     def button_pressed(self, event):
         self.button_submit.config(image=self.submit_pressed)
