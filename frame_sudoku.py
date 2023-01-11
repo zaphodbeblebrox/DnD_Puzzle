@@ -24,33 +24,11 @@ class FrameSudoku:
                         [tk.PhotoImage(file = r".\\images\\dial_8_on.png"), tk.PhotoImage(file = r".\\images\\dial_8_off.png")],
                         [tk.PhotoImage(file = r".\\images\\dial_9_on.png"), tk.PhotoImage(file = r".\\images\\dial_9_off.png")]]
         
-        # self.dial_on = [tk.PhotoImage(file = r".\\images\\dial_1_on.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_2_on.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_3_on.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_4_on.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_5_on.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_6_on.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_7_on.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_8_on.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_9_on.png")]
-
-        # self.dial_off = [tk.PhotoImage(file = r".\\images\\dial_1_off.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_2_off.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_3_off.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_4_off.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_5_off.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_6_off.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_7_off.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_8_off.png"),
-        #                 tk.PhotoImage(file = r".\\images\\dial_9_off.png")]
+        self.dial_status = ('TButton', 'TButton_Locked')
 
         for x in range(len(self.dial_light)):
             for y in range(len(self.dial_light[x])):
                 self.dial_light[x][y] = self.dial_light[x][y].subsample(2,2)
-        # for i in range(len(self.dial_on)):
-        #     self.dial_on[i] = self.dial_on[i].subsample(2,2)
-        # for i in range(len(self.dial_off)):
-        #     self.dial_off[i] = self.dial_off[i].subsample(2,2)
 
         # Generator Frame Definitions----------
         self.frameGen = tk.LabelFrame(self.root, bd=0, padx=5, pady=5, bg=self.color['background'])
@@ -61,8 +39,10 @@ class FrameSudoku:
         self.button_dials = [[0 for i in range(cols)] for j in range(rows)]
         for x in range(0, 3):
             for y in range(0,3):
-                # self.button_dials[x][y] = ttk.Button(self.frameGen, image = self.dial_off[int(self.program_data.puzzle_dic["start"][x][y])-1])
-                self.button_dials[x][y] = ttk.Button(self.frameGen, image = self.dial_light[int(self.program_data.puzzle_dic["start"][x][y])-1][random.randint(0, 1)])
+                if self.program_data.puzzle_dic["locked"][x][y] == 'x':
+                    self.button_dials[x][y] = ttk.Button(self.frameGen, style = self.dial_status[1], image = self.dial_light[int(self.program_data.puzzle_dic["start"][x][y])-1][random.randint(0, 1)])
+                else:
+                    self.button_dials[x][y] = ttk.Button(self.frameGen, style = self.dial_status[0], image = self.dial_light[int(self.program_data.puzzle_dic["start"][x][y])-1][random.randint(0, 1)])
                 self.button_dials[x][y].grid(row=x, column=y, sticky="nsew", padx=5, pady=5)
 
         self.button_submit = ttk.Button(self.frameGen, image = self.submit)

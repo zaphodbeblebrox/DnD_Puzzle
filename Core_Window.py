@@ -14,9 +14,8 @@ class Core_Window:
 
         # --- Definitions
         self.color = {
-            "notebookbg":"#1a1a1a",
-            "notebookfg":"#000000",
             "background":"#232323",
+            "locked_bg":"#494949",
             "button":"#333333",
             "untab":"#BB86FC",
             "selected":"#FFDD03",
@@ -54,6 +53,16 @@ class Core_Window:
             background = [('disabled', self.color["background"]),
                         ('pressed', self.color["background"]),
                         ('active', self.color["background"])])
+
+        style.configure('TButton_Locked', font = f, borderwidth=0, padx=0, pady=0, background=self.color['locked_bg'], foreground=self.color['locked_bg'], 
+                        height=4, width=18, focuscolor=self.color['locked_bg'], justify ="center")
+        style.map('TButton_Locked', 
+            foreground = [('disabled', self.color["locked_bg"]),
+                        ('pressed', self.color["locked_bg"]),
+                        ('selected', self.color['locked_bg'])], 
+            background = [('disabled', self.color["locked_bg"]),
+                        ('pressed', self.color["locked_bg"]),
+                        ('active', self.color["locked_bg"])])                
         
         # Future do comparison of puzzle type and call appropriate Frame_XXX
         self.puzzle_display = FrameSudoku(self.color, self.root, program_data)     
