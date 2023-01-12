@@ -2,6 +2,8 @@ from logging import root
 import tkinter as tk
 from tkinter import font, ttk
 import random
+from os import listdir
+from os.path import isfile, join
 
 class FrameSudoku:
     
@@ -13,6 +15,8 @@ class FrameSudoku:
         self.submit = tk.PhotoImage(file = r".\\images\\submit_default.png")
         self.submit_pressed = tk.PhotoImage(file = r".\\images\\submit_pressed.png")
 
+        # self.dial_img = self.program_data.dial_img_dic_gen()
+        
         # [dial light ON][dial light OFF]
         self.dial_light = [[tk.PhotoImage(file = r".\\images\\dial_1_on.png"), tk.PhotoImage(file = r".\\images\\dial_1_off.png")],
                         [tk.PhotoImage(file = r".\\images\\dial_2_on.png"), tk.PhotoImage(file = r".\\images\\dial_2_off.png")],

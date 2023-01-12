@@ -2,6 +2,7 @@ import sys
 # from core_window import *
 from os import listdir
 from os.path import isfile, join
+import tkinter as tk
 
 class Data_Handler:
     def __init__(self):
@@ -25,22 +26,11 @@ class Data_Handler:
         
         temp_data = self.parse_data(raw_data)
         
-        # rows, cols = (3,3)
+        # initiate data dictionary
         self.puzzle_dic = {}
         
         # if puzzle is sudoku type()
         self.config_sudoku(temp_data)
-
-        # self.puzzle_dic['start'] = [[0 for i in range(cols)] for j in range(rows)]
-        # self.puzzle_dic['current'] = [[0 for i in range(cols)] for j in range(rows)]
-        # self.puzzle_dic['locked'] = [[0 for i in range(cols)] for j in range(rows)]
-        # self.puzzle_dic['answer'] = [[0 for i in range(cols)] for j in range(rows)]
-        
-        # self.fill_dic_2d_list(temp_data, 'start', 0, 2)
-        # self.fill_dic_2d_list(temp_data, 'current', 0, 2)
-        # self.fill_dic_2d_list(temp_data, 'locked', 3, 5)
-        # self.fill_dic_2d_list(temp_data, 'pairing', 6, 8)
-        # self.fill_dic_2d_list(temp_data, 'answer', 9, 11)
 
         # pause = ""
 
@@ -79,4 +69,19 @@ class Data_Handler:
             tempArray = array[i].split(deliminator)
             temp.append(tempArray)
         return temp
+
+    def dial_img_dic_gen(self):
+        dial_dir = '.\\images\\'
+        dial_path = [f for f in listdir(dial_dir) if isfile(join(dial_dir, f))]
+        temp_dic = {}
+        for img in dial_path:
+            if img[0].isdigit == False:
+                continue
+            if img[0] not in temp_dic.keys():
+                temp_dic[img[0]] = {}
+
+
+        tk.PhotoImage(file = dial_dir+dial_path[0])
+
+        return temp_dic
 
