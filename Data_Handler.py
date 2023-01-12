@@ -77,11 +77,13 @@ class Data_Handler:
         for img in dial_path:
             if img[0].isdigit == False:
                 continue
+            if img[1] != 'N' and img[1] != 'F':
+                continue
+            if img[2] != 'U' and img[2] != 'L':
+                continue
             if img[0] not in temp_dic.keys():
                 temp_dic[img[0]] = {}
-
-
-        tk.PhotoImage(file = dial_dir+dial_path[0])
+            temp_dic[img[0]][img[1:3]] = tk.PhotoImage(file = dial_dir + img).subsample(2,2)
 
         return temp_dic
 
