@@ -83,7 +83,7 @@ class Data_Handler:
                 continue
             if img[0] not in temp_dic.keys():
                 temp_dic[img[0]] = {}
-            temp_dic[img[0]][img[1:3]] = tk.PhotoImage(file = dial_dir + img).subsample(2,2)
+            temp_dic[img[0]][img[1:3]] = tk.PhotoImage(file = dial_dir + img).subsample(3,3)
 
         return temp_dic
 
