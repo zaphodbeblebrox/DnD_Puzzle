@@ -25,7 +25,7 @@ class FrameSudoku:
         self.dial_img = self.program_data.dial_img_dic_gen()
         
         # Generator Frame Definitions----------
-        self.frameGen = tk.LabelFrame(self.root, bd=0, padx=5, pady=5, bg=self.color['highlight'])
+        self.frameGen = tk.LabelFrame(self.root, bd=0, padx=5, pady=5, bg=self.color['background'])
         self.frameGen.grid_propagate(1)
         self.frameGen.grid(row=0, column=0)
 
