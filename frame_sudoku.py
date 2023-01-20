@@ -1,7 +1,9 @@
 from logging import root
+import threading
 import tkinter as tk
 from tkinter import font, ttk
 import random
+from playsound import playsound
 from os import listdir
 from os.path import isfile, join
 
@@ -11,8 +13,15 @@ class FrameSudoku:
         self.root = root
         self.color = color
         self.program_data = program_data
+        self.listen_thread = None
 
         self.locked = 'x'
+        self.attempts = 0
+
+        self.audio = {"error":'.\\audio\\audio_error.wav',
+                        "alarm":'.\\audio\\audio_alarm.wav',
+                        "click":'.\\audio\\audio_click.wav',
+                        "success":'.\\audio\\audio_success.wav'}
 
         # Import Dial/Button Images
         self.attempt_img = [tk.PhotoImage(file = r".\\images\\attempt_0.png").subsample(2,2),
@@ -26,7 +35,6 @@ class FrameSudoku:
         
         # Generator Frame Definitions----------
         self.frameGen = tk.LabelFrame(self.root, bd=0, padx=5, pady=5, bg=self.color['background'])
-        self.frameGen.grid_propagate(1)
         self.frameGen.grid(row=0, column=0)
 
         # Create 2d-List to hold buttons
@@ -45,17 +53,48 @@ class FrameSudoku:
         self.button_submit.grid(row=1, column=3, rowspan=2, sticky="nsew", padx=5, pady=5)
         self.button_submit.bind('<Button-1>', self.button_pressed)
         self.button_submit.bind('<ButtonRelease-1>', self.button_released)
-
-        
         
     def button_pressed(self, event):
+        self.listen_thread = threading.Thread(target=self.play_audio, args=(self.audio["click"], ))
+        self.listen_thread.start() 
         self.button_submit.config(image=self.submit_pressed)
     
     def button_released(self, event):
         self.button_submit.config(image=self.submit)
 
+    def play_audio(self, audio_path):
+        playsound(audio_path)
+    
+    # Called when the solution is incorrect. Changes attempt img and sounds alarm.
+    def incorrect_solution(self):
+        if self.attempts < 3:
+            self.attempts += 1
+            self.label_attempt.config(image=self.attempt_img[self.attempts])
+            if self.attempts == 3:
+                self.listen_thread = threading.Thread(target=self.play_audio, args=(self.audio["alarm"], ))
+                self.listen_thread.start()
+            else:
+                self.listen_thread = threading.Thread(target=self.play_audio, args=(self.audio["error"], ))
+                self.listen_thread.start()
+        else:
+            self.listen_thread = threading.Thread(target=self.play_audio, args=(self.audio["alarm"], ))
+            self.listen_thread.start()
+
+
+    # Called when the solution is correct.
+    def correct_solution(self):
+        self.attempts = 0
+        self.label_attempt.config(image=self.attempt_img[0])
+        self.listen_thread = threading.Thread(target=self.play_audio, args=(self.audio["success"], ))
+        self.listen_thread.start() 
+
+    # Check the solution vs current orentation of puzzle and verify they match or not.
     def check_solution(self):
-        pass
+        for x in range(len(self.program_data.puzzle_dic["current"])):
+            for y in range(len(self.program_data.puzzle_dic["current"])):
+                if self.program_data.puzzle_dic["current"][x][y] != self.program_data.puzzle_dic["answer"][x][y]:
+                    return self.incorrect_solution()
+        self.correct_solution()
     
     def generate_key(self, id):
         #id is formatted as (x,y) for self.program_data.puzzle_dic[key][x][y] 
@@ -65,10 +104,11 @@ class FrameSudoku:
 
     def exe_dial_evt(self, id):
         #id is formatted as (x,y) for self.program_data.puzzle_dic[key][x][y] 
-        # self.frameGen.grid_propagate(0)
         # check if dial is locked
         if self.program_data.puzzle_dic["locked"][id[0]][id[1]] == self.locked:
             return
+        self.listen_thread = threading.Thread(target=self.play_audio, args=(self.audio["click"], ))
+        self.listen_thread.start() 
 
         key = self.generate_key(id)
         value = int(self.program_data.puzzle_dic["current"][id[0]][id[1]])
