@@ -22,7 +22,7 @@ class FrameSudoku:
                         "alarm":'.\\audio\\audio_alarm.wav',
                         "click":'.\\audio\\audio_click.wav',
                         "success":'.\\audio\\audio_success.wav'}
-
+       
         # Import Dial/Button Images
         self.attempt_img = [tk.PhotoImage(file = r".\\images\\attempt_0.png").subsample(2,2),
                         tk.PhotoImage(file = r".\\images\\attempt_1.png").subsample(2,2),
@@ -55,8 +55,8 @@ class FrameSudoku:
         self.button_submit.bind('<ButtonRelease-1>', self.button_released)
         
     def button_pressed(self, event):
-        self.listen_thread = threading.Thread(target=self.play_audio, args=(self.audio["click"], ))
-        self.listen_thread.start() 
+        # self.audio_dic["click"].start()
+        self.audio_thread("click") 
         self.button_submit.config(image=self.submit_pressed)
     
     def button_released(self, event):
@@ -65,28 +65,27 @@ class FrameSudoku:
     def play_audio(self, audio_path):
         playsound(audio_path)
     
+    def audio_thread(self, key):
+        thread = threading.Thread(target=self.play_audio, args=(self.audio[key], ))
+        thread.start()
+
     # Called when the solution is incorrect. Changes attempt img and sounds alarm.
     def incorrect_solution(self):
         if self.attempts < 3:
             self.attempts += 1
             self.label_attempt.config(image=self.attempt_img[self.attempts])
             if self.attempts == 3:
-                self.listen_thread = threading.Thread(target=self.play_audio, args=(self.audio["alarm"], ))
-                self.listen_thread.start()
+                self.audio_thread("alarm")
             else:
-                self.listen_thread = threading.Thread(target=self.play_audio, args=(self.audio["error"], ))
-                self.listen_thread.start()
+                self.audio_thread("error") 
         else:
-            self.listen_thread = threading.Thread(target=self.play_audio, args=(self.audio["alarm"], ))
-            self.listen_thread.start()
-
+            self.audio_thread("alarm")
 
     # Called when the solution is correct.
     def correct_solution(self):
         self.attempts = 0
         self.label_attempt.config(image=self.attempt_img[0])
-        self.listen_thread = threading.Thread(target=self.play_audio, args=(self.audio["success"], ))
-        self.listen_thread.start() 
+        self.audio_thread("success") 
 
     # Check the solution vs current orentation of puzzle and verify they match or not.
     def check_solution(self):
