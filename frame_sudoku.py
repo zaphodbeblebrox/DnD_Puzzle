@@ -44,7 +44,8 @@ class FrameSudoku:
             for y in range(0,3):
                 key = self.generate_key((x,y))
                 self.button_dials[x][y] = ttk.Button(self.frameGen, image = self.dial_img[self.program_data.puzzle_dic["start"][x][y]][key], command=lambda id=(x,y): self.exe_dial_evt(id))
-                self.button_dials[x][y].grid(row=x, column=y, padx=5, pady=5, ipadx=15, ipady=15)
+                # self.button_dials[x][y].grid(row=x, column=y, padx=5, pady=5, ipadx=15, ipady=15)
+                self.button_dials[x][y].grid(row=x, column=y)
 
         self.label_attempt = ttk.Label(self.frameGen, image = self.attempt_img[0])
         self.label_attempt.grid(row=0, column=3, padx=5, pady=5)

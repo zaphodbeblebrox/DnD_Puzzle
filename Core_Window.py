@@ -44,8 +44,10 @@ class Core_Window:
                         height=4, width=5, focuscolor=self.color['button'], justify ="center")
 
         # Button Style
+        # style.configure('TButton', font = f, borderwidth=0, padx=0, pady=0, background=self.color['background'], foreground=self.color['background'], 
+        #                 height=4, width=18, focuscolor=self.color['background'], justify ="center")
         style.configure('TButton', font = f, borderwidth=0, padx=0, pady=0, background=self.color['background'], foreground=self.color['background'], 
-                        height=4, width=18, focuscolor=self.color['background'], justify ="center")
+                focuscolor=self.color['background'], justify ="center")
         style.map('TButton', 
             foreground = [('disabled', self.color["background"]),
                         ('pressed', self.color["background"]),
