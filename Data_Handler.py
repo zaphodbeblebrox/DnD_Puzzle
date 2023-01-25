@@ -84,8 +84,10 @@ class Data_Handler:
             if img[0] not in temp_dic.keys():
                 temp_dic[img[0]] = {}
             temp_img = tk.PhotoImage(file = dial_dir + img)
-            z = 2
-            s = 5
+            # Resize img to 40%... Try 45 nxt
+            # Make this a .txt variable
+            z = 9
+            s = 20
             temp_img = temp_img.zoom(z,z)
             temp_img = temp_img.subsample(s,s)
             temp_dic[img[0]][img[1:3]] = temp_img

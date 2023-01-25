@@ -1,0 +1,2 @@
+zoom;3
+shrink;4
