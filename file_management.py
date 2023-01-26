@@ -31,7 +31,7 @@ def get_txts_in_dir(dir_path):
             file_list.append(file)
     return file_list
     
-# Returns a array of all scripts belonging to given UUT P/N and the path to them
+# X Returns a array of all scripts belonging to given UUT P/N and the path to them
 def get_scripts(uut_pn):
     path = ".\\RS232_CONFIG_FILES\\UUT\\SCRIPTS\\"
     monitor_type = get_subdirectories(path)
@@ -46,22 +46,7 @@ def get_scripts(uut_pn):
             break
     return path, get_txts_in_dir(path)
 
-# Reads in ATP script file and rtns baud rate and 2-d array containing the rest of the file dilimitated.
-def read_script_file(file):
-    data = read_in_file(file)
-    baud_rate = data.pop(0)
-    data = delimitate_array(data)
-    return baud_rate, data
-
-# Grab each unique item in array - targeted for script files
-def get_unique_cmd_formats(array):
-    unique_formats = []
-    for data in array:
-        if data[1] not in unique_formats:
-            unique_formats.append(data[1])
-    return unique_formats
-
-# Grab each unique item in array 
+# X Grab each unique item in array 
 def get_unique_array_items(array):
     unique_formats = []
     for data in array:

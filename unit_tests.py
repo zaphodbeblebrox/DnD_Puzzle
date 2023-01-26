@@ -1,6 +1,6 @@
 import unittest
 # from main import *
-import file_import as fi
+import file_management as fi
 
 class FileImportTests(unittest.TestCase):
     def test_read_file(self):
