@@ -31,7 +31,7 @@ class Core_Window:
         }
 
         self.root.config(background = self.color['background'])
-              
+
         # Create Notebook Style
         f = ('Segoe UI','10','bold')
         t = ('Segoe UI','10','normal')
